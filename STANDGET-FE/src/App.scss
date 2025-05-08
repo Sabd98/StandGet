@@ -1,0 +1,377 @@
+// Variables
+$primary-color: #ffeacc;
+$secondary-color: #ffd683;
+$dark-bg: #8a4900;
+$dark2-bg: #312c1d;
+// Variables (add these at the top if not already defined)
+$error-bg: #f9b8b8;
+$error-text: #6d0b0b;
+$modal-bg: #e4ddd4;
+$button-hover: #221700;
+$text-color: #1a1a1a;
+$font-primary: "Raleway", sans-serif;
+$font-secondary: "Lato", sans-serif;
+
+// Mixins
+@mixin flex-center($gap: 0) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Lato:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: $primary-color;
+  color: #d9e2f1;
+  min-height: 100vh;
+}
+
+
+
+
+#main-header {
+  @include flex-center(space-between);
+  padding: 1rem 5%;
+  background-color: $secondary-color;
+
+  #title {
+    @include flex-center(1rem);
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 2px solid $primary-color;
+    }
+  }
+
+  button {
+    font: {
+      size: 1.5rem;
+      family: $font-secondary;
+    }
+  }
+}
+
+h1 {
+  font: {
+    family: $font-secondary;
+    weight: 700;
+    size: 2rem;
+  }
+  margin: 0;
+  color: $text-color;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+
+#gadgets {
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  list-style: none;
+    animation: fade-slide-up 0.3s ease-out forwards;
+
+  // margin: 2rem auto;
+  // padding: 1rem;
+  // gap: 1rem;
+}
+
+.gadget-item {
+  background-color: $secondary-color;
+  border-radius: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+      color: $text-color;
+
+}
+
+.gadget-item article {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.gadget-item img {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
+
+.gadget-item h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.75rem 0;
+}
+
+.gadget-item-price {
+  background-color: $primary-color;
+  color: #332906;
+}
+
+.modal {
+  background-color: #e4ddd4;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  width: 80%;
+  max-width: 40rem;
+  animation: fade-slide-up 0.3s ease-out forwards;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+  }
+}
+
+.cart-total {
+  display: flex;
+  justify-content: flex-end;
+  color: #46443c;
+}
+
+.cart-item {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid #332906;
+
+  p {
+    margin: 0;
+    color: #1f1a09;
+  }
+}
+
+.cart-item-actions {
+  button {
+    cursor: pointer;
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    background-color: $dark2-bg;
+    color: $primary-color;
+
+    &:hover,
+    &:active {
+      background-color: darken($dark2-bg, 5%);
+      color: $secondary-color;
+    }
+  }
+}
+
+
+
+// Controls
+.control {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: 100%;
+    max-width: 20rem;
+    border: 1px solid $dark-bg;
+  }
+}
+
+// Buttons
+.button {
+  font: inherit;
+  cursor: pointer;
+  background-color: $dark-bg;
+  border: 1px solid $dark-bg;
+  color: #dadada;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+
+  &:hover,
+  &:active {
+    background-color: $button-hover;
+    border-color: $button-hover;
+    color: #ffffff;
+  }
+}
+
+.text-button {
+  font: inherit;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: $text-color;
+
+  &:hover,
+  &:active {
+    color: darken($text-color, 20%);
+  }
+}
+
+// Modal
+.modal {
+  background-color: $modal-bg;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  width: 80%;
+  max-width: 40rem;
+  animation: fade-slide-up 0.3s ease-out forwards;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+  }
+}
+//Product Form
+.product_form {
+  border-radius: 6px;
+  border: none;
+  color:  rgba(0, 0, 0, 0.55);
+  padding: 1rem;
+  width: 80%;
+  max-width: 20rem;
+  animation: fade-slide-up 0.3s ease-out forwards;
+
+  &::backdrop {
+    background-color: rgba(112, 112, 112, 0.55);
+  }
+}
+
+.order_history{
+    animation: fade-slide-up 0.3s ease-out forwards;
+
+}
+
+// Utility Classes
+.center {
+  text-align: center;
+}
+
+// Error Handling
+.error {
+  width: 90%;
+  max-width: 25rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: $error-bg;
+  color: $error-text;
+  border-radius: 6px;
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.banner_slide_item {
+    display: flex !important;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .banner_image {
+        position: relative;
+        z-index: 2;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            max-width: 847px;
+            width: 100%;
+            min-height: 747px;
+            height: 100%;
+            background-color: #ffc393;
+            border-radius: 100%;
+            z-index: -1;
+        }
+    }
+}
+
+.slider_container {
+    > .slick-slider {
+        > .slick-prev,
+        > .slick-next {
+            z-index: 5 !important;
+        }
+
+        > .slick-prev {
+            left: 15px !important;
+        }
+
+        > .slick-next {
+            right: 15px !important;
+        }
+
+        > .slick-prev:before,
+        > .slick-next:before {
+            font-family: 'slick';
+            font-size: 52px !important;
+            line-height: 1;
+            opacity: .75;
+            color: #545555 !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        > .slick-dots {
+            position: absolute;
+            bottom: 10px !important;
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-align: center;
+
+            li {
+                button:before {
+                    font-family: 'slick';
+                    font-size: 22px !important;
+                    line-height: 20px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 20px;
+                    height: 20px;
+                    content: '•';
+                    text-align: center;
+                    opacity: .25;
+                    color: rgb(110, 110, 110);
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+
+                &.slick-active button:before {
+                    color: #141413 !important;
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../utils/db.js";
 
-// models/product.js
 export const Product = sequelize.define("Product", {
   id: {
     type: DataTypes.UUID,
@@ -20,10 +19,3 @@ export const Product = sequelize.define("Product", {
   image: DataTypes.STRING,
 });
 
-// // Add associate method
-// Product.associate = (models) => {
-//   Product.belongsToMany(models.Order, {
-//     through: "OrderItem",
-//     foreignKey: "productId"
-//   });
-// };

@@ -92,18 +92,18 @@ productRouter.delete(
     const product = await Product.findByPk(req.params.id);
     if (!product) return res.status(404).json({ error: "Product not found" });
 
-     if (product.image) {
-       // Proper path construction
-       const filename = product.image.split("/images/").pop();
-       const imagePath = join(__dirname, "..", "public", filename);
+    if (product.image) {
+      // Proper path construction
+      const filename = product.image.split("/images/").pop();
+      const imagePath = join(__dirname, "..", "public", filename);
 
-       if (fs.existsSync(imagePath)) {
-         fs.unlinkSync(imagePath); // Use synchronous version for better error handling
-       } else {
-         console.warn("Image file not found:", imagePath);
-       }
-     }
-     
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath); // Use synchronous version for better error handling
+      } else {
+        console.warn("Image file not found:", imagePath);
+      }
+    }
+
     await product.destroy();
     res.sendStatus(204);
   }

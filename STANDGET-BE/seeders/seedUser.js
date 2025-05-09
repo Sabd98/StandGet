@@ -21,7 +21,6 @@ const seedUsers = async () => {
   try {
     await sequelize.sync();
 
-    // Hash passwords before creation
     const hashedUsers = await Promise.all(
       usersData.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);

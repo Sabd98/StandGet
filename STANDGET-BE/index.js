@@ -21,7 +21,6 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Associations
-// In your model setup file
 User.hasMany(Order, { foreignKey: 'userId' });
 Order.belongsTo(User, { foreignKey: 'userId' });
 Order.belongsToMany(Product, { through: OrderItem });

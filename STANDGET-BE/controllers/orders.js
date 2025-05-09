@@ -7,17 +7,22 @@ import PDFDocument from "pdfkit";
 
 export const orderRouter = Router();
 
-orderRouter.get("/orders", authMiddleware, adminMiddleware,async (req, res) => {
-  const orders = await Order.findAll({
-    include: [Product, User],
-    order: [["createdAt", "DESC"]],
-  });
-  res.json(orders);
-});
+orderRouter.get(
+  "/orders",
+  authMiddleware,
+  adminMiddleware,
+  async (req, res) => {
+    const orders = await Order.findAll({
+      include: [Product, User],
+      order: [["createdAt", "DESC"]],
+    });
+    res.json(orders);
+  }
+);
 
 orderRouter.post("/orders", authMiddleware, async (req, res) => {
-  const { items, total } = req.body;  
-  console.log(req.body,'output req');
+  const { items, total } = req.body;
+  console.log(req.body, "output req");
   console.log(req.user, "output user");
 
   if (!items || items.length === 0) {
@@ -29,7 +34,7 @@ orderRouter.post("/orders", authMiddleware, async (req, res) => {
   }
   const order = await Order.create({
     total: total,
-    userId: req.user.id, 
+    userId: req.user.id,
     status: "pending",
   });
 
@@ -52,7 +57,15 @@ orderRouter.post("/orders", authMiddleware, async (req, res) => {
       },
       {
         model: User,
-        attributes: ["id", "name", "email","role", "street", "postalCode", "city"],
+        attributes: [
+          "id",
+          "name",
+          "email",
+          "role",
+          "street",
+          "postalCode",
+          "city",
+        ],
       },
     ],
   });
@@ -66,7 +79,7 @@ const currencyFormatter = new Intl.NumberFormat("id-ID", {
   minimumFractionDigits: 0,
 });
 
-orderRouter.get("/invoice/:id", authMiddleware,async (req, res) => {
+orderRouter.get("/invoice/:id", authMiddleware, async (req, res) => {
   const order = await Order.findByPk(req.params.id, {
     include: [Product, User],
   });
@@ -95,11 +108,6 @@ orderRouter.get("/invoice/:id", authMiddleware,async (req, res) => {
   pdfDoc.moveDown(2);
 
   let yPosition = pdfDoc.y;
-  // Items Table
-  // pdfDoc
-  //   .font("Helvetica-Bold")
-  //   .fontSize(12)
-  //   .text("Items:", { underline: true }, 50, yPosition, xPosition);
 
   pdfDoc
     .font("Helvetica-Bold")
@@ -112,7 +120,6 @@ orderRouter.get("/invoice/:id", authMiddleware,async (req, res) => {
   yPosition += 20;
   pdfDoc.moveTo(50, yPosition).lineTo(550, yPosition).stroke();
 
-  // Table Rows
   order.Products.forEach((product, index) => {
     yPosition += 20;
     const total = product.price * product.OrderItem.quantity;

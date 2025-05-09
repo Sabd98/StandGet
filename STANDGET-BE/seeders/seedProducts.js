@@ -46,7 +46,7 @@ const productsData = [
 
 const seedProducts = async () => {
   try {
-    await sequelize.sync(); // Sync model with database
+    await sequelize.sync(); 
     await Product.bulkCreate(productsData);
     console.log("Products seeded successfully!");
   } catch (error) {

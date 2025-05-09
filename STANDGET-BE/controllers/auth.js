@@ -7,7 +7,7 @@ export const authRouter = Router();
 
 // Auth Routes
 authRouter.post("/register", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const { password, email, name, street, postalCode, city } = req.body;
     // Basic validation

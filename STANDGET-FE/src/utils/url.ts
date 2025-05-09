@@ -1,0 +1,1 @@
+export const URL_API = "https://standget-production.up.railway.app";

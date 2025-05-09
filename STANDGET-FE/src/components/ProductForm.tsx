@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import { Products } from "../utils/interfaces";
+import { URL_API } from "../utils/url";
 
 interface FormProduct {
   name: string;
@@ -27,7 +28,7 @@ export default function ProductForm() {
     if (id) {
       // Fetch product data
       sendRequest({
-        url: `http://localhost:3000/products/${id}`,
+        url: `${URL_API}/products/${id}`,
         method: "GET",
       }).then((data) =>  setFormData({
           name: data.name,
@@ -59,8 +60,8 @@ export default function ProductForm() {
     //Request Among Post/Put
     await sendRequest({
       url: id
-        ? `http://localhost:3000/products/${id}`
-        : "http://localhost:3000/products",
+        ? `${URL_API}/products/${id}`
+        : `${URL_API}/products`,
       method: id ? "PUT" : "POST",
       data: formDataToSend,
       headers: { "Content-Type": "multipart/form-data" },

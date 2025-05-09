@@ -10,6 +10,7 @@ import useHttp from "../hooks/useHttp";
 import Button from "./UI/Button";
 import { selectCheckoutVisible } from "../store/progressSelectors";
 import { currencyFormatter } from "../utils/formatting";
+import { URL_API } from "../utils/url";
 
 type OrderResponse = {
   id:string;
@@ -21,14 +22,7 @@ export default function Checkout() {
   const cartTotal = useSelector(selectCartTotal);
   const checkoutVisible = useSelector(selectCheckoutVisible);
 
-  const [invoiceUrl, setInvoiceUrl] = useState("");
-
   const { sendRequest } = useHttp<OrderResponse>();
-
-  //Handler close modal or finishing handler
-  const handleClose = () => {
-    dispatch(hideCheckout());
-  };
 
   const handleFinish = async () => {
     if (!user) return;
@@ -36,7 +30,7 @@ export default function Checkout() {
     try {
       //Order Input Response
       const orderResponse = await sendRequest({
-        url: "http://localhost:3000/orders",
+        url: `${URL_API}/orders`,
         method: "POST",
         data: {
           items: cartItems,
@@ -46,7 +40,7 @@ export default function Checkout() {
 
       if (orderResponse.id) {
         const pdfResponse = await fetch(
-          `http://localhost:3000/invoice/${orderResponse.id}`,
+          `${URL_API}/invoice/${orderResponse.id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -56,26 +50,27 @@ export default function Checkout() {
         //Fetch Invoice to PDF
         const pdfBlob = await pdfResponse.blob();
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        setInvoiceUrl(pdfUrl);
-        const pdfWindow = window.open(pdfUrl, "_blank");
-        if (pdfWindow) {
-          pdfWindow.focus();
-        } else {
-          alert("Please allow pop-ups for this site");
-        }
+       const link = document.createElement("a");
+       link.href = pdfUrl;
+       link.download = `invoice-${orderResponse.id}.pdf`;
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
 
         dispatch(clearCart());
         dispatch(hideCheckout());
-
       }
     } catch (err) {
       console.error("Checkout failed:", err);
     }
+  };
 
+  const handleClose = () => {
+    dispatch(hideCheckout());
   };
 
   return (
-    <Modal open={checkoutVisible} onClose={handleFinish}>
+    <Modal open={checkoutVisible} onClose={handleClose}>
       <div className="space-y-4">
         <h2 className="text-2xl font-bold">Order Confirmation</h2>
         <p>Your order has been placed successfully!</p>
@@ -84,7 +79,7 @@ export default function Checkout() {
         </p>
         <div className="flex gap-x-4">
           <Button onClick={handleFinish}>
-            <a href={invoiceUrl}>Submit</a>
+           Submit
           </Button>
           <Button type="button" textOnly onClick={handleClose}>
             Close

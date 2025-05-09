@@ -4,6 +4,7 @@ import useHttp from "../hooks/useHttp";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import { Link, useNavigate } from "react-router";
+import { URL_API } from "../utils/url";
 
 export default function RegistrationForm() {
   //Form data state
@@ -28,7 +29,7 @@ export default function RegistrationForm() {
     }
     try {
       const response = await sendRequest({
-        url: "http://localhost:3000/register",
+        url: `${URL_API}/register`,
         method: "POST",
         data: {
           ...formData,

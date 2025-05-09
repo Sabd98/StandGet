@@ -4,6 +4,7 @@ import Error from "./UI/Error";
 import type { Products } from "../utils/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../hooks/authContext";
+import { URL_API } from "../utils/url";
 
 export default function Products() {
   // Fetching Products state and Handler
@@ -14,7 +15,7 @@ export default function Products() {
   const fetchProducts = useCallback(async () => {
     try {
       const data = await sendRequest({
-        url: "http://localhost:3000/products",
+        url: `${URL_API}/products`,
         method: "GET",
       });
       setAllGadgets(data);

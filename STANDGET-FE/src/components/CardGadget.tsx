@@ -7,6 +7,7 @@ import { Edit, ShoppingCart, TrashIcon } from "lucide-react";
 import { Link } from "react-router";
 import { useAuth } from "../hooks/authContext";
 import useHttp from "../hooks/useHttp";
+import { URL_API } from "../utils/url";
 
 export default function CardGadget({
   gadget,
@@ -32,7 +33,7 @@ export default function CardGadget({
   //Delete Handler
   const removeGadget = async (gadgetId: string) => {
     await sendRequest({
-      url: `http://localhost:3000/products/${gadgetId}`,
+      url: `${URL_API}/products/${gadgetId}`,
       method: "DELETE",
     });
     onDeleteSuccess();
@@ -40,7 +41,7 @@ export default function CardGadget({
   return (
     //Inside Card
     <article className="gadget-item overflow-hidden text-center">
-      <img src={`http://localhost:3000/${gadget.image}`} alt={gadget.name} />
+      <img src={`${URL_API}/${gadget.image}`} alt={gadget.name} />
       <div className="flex justify-between items-center mx-4 my-4">
         <h3 className="text-start">{gadget.name}</h3>
 

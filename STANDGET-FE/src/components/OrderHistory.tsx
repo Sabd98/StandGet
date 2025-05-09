@@ -4,6 +4,7 @@ import useHttp from "../hooks/useHttp";
 import { currencyFormatter } from "../utils/formatting";
 import Header from "./Header";
 import { Orders } from "../utils/interfaces";
+import { URL_API } from "../utils/url";
 
 
 export default function OrderHistory() {
@@ -13,7 +14,7 @@ export default function OrderHistory() {
   const fetchOrders = useCallback(async () => {
     try {
       const data = await sendRequest({
-        url: "http://localhost:3000/orders",
+        url: `${URL_API}/orders`,
         method: "GET",
       });
       setOrders(data);
@@ -26,7 +27,7 @@ export default function OrderHistory() {
     fetchOrders();
   }, [fetchOrders]);
 
-  if (loading) return <p>Loading orders...</p>;
+  if (loading) return <p className="text-black">Loading orders...</p>;
   if (error) return <p>Error loading orders: {error}</p>;
 
   return (

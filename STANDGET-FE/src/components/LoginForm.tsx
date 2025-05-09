@@ -6,6 +6,7 @@ import { ChangeEvent, useState } from "react";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
 import { useAuth } from "../hooks/authContext";
+import { URL_API } from "../utils/url";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function LoginForm() {
     try {
       e.preventDefault();
       const response = await sendRequest({
-        url: `http://localhost:3000/login`,
+        url: `${URL_API}/login`,
         method: "POST",
         data: { email, password },
         headers: {

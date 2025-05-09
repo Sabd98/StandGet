@@ -1,5 +1,4 @@
 // Checkout.tsx
-import { useState } from "react";
 import Modal from "./UI/Modal";
 import { useAuth } from "../hooks/authContext";
 import { useDispatch, useSelector } from "react-redux";

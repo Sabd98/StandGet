@@ -7,7 +7,7 @@ import { Orders } from "../utils/interfaces";
 
 
 export default function OrderHistory() {
-  const { loading, error, sendRequest } = useHttp();
+  const { loading, error, sendRequest } = useHttp<Orders[]>();
   const [orders, setOrders] = useState<Orders[]>([]);
 
   const fetchOrders = useCallback(async () => {

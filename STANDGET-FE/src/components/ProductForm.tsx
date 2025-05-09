@@ -3,16 +3,23 @@ import useHttp from "../hooks/useHttp";
 import { ChangeEvent, useEffect, useState } from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
+import { Products } from "../utils/interfaces";
 
+interface FormProduct {
+  name: string;
+  price: string;
+  description: string;
+  image: File | null;
+}
 export default function ProductForm() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { sendRequest } = useHttp();
-  const [formData, setFormData] = useState({
+  const { sendRequest } = useHttp<Products>();
+  const [formData, setFormData] = useState<FormProduct>({
     name: "",
     price: "",
     description: "",
-    image: "",
+    image: null,
   });
 
   //Get data if get Product ID
@@ -22,7 +29,12 @@ export default function ProductForm() {
       sendRequest({
         url: `http://localhost:3000/products/${id}`,
         method: "GET",
-      }).then((data) => setFormData(data));
+      }).then((data) =>  setFormData({
+          name: data.name,
+          price: data.price.toString(),
+          description: data.description,
+          image: null, // Keep image as null since we can't convert URL to File
+        }));
     }
   }, [id]);
 
@@ -38,7 +50,7 @@ export default function ProductForm() {
     e.preventDefault();
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
-    formDataToSend.append("price", formData.price);
+    formDataToSend.append("price", formData.price.toString());
     formDataToSend.append("description", formData.description);
 
     if (formData.image) {
@@ -65,15 +77,21 @@ export default function ProductForm() {
           label="Name"
           id="name"
           type="text"
+          textarea={false}
           value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setFormData({ ...formData, name: e.target.value })
+          }
         />
         <Input
           label="Price"
           type="number"
           id="price"
+          textarea={false}
           value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setFormData({ ...formData, price: e.target.value })
+          }
         />
         <Input
           label="Description"
@@ -81,7 +99,7 @@ export default function ProductForm() {
           id="description"
           value={formData.description}
           textarea
-          onChange={(e) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setFormData({ ...formData, description: e.target.value })
           }
         />
@@ -90,6 +108,7 @@ export default function ProductForm() {
           id="image"
           type="file"
           accept="image/*"
+          textarea={false}
           onChange={handleFileChange}
         />
         {/* {error && <Error title="Failed to submit" message={error} />} */}

@@ -1,7 +1,7 @@
 // Checkout.tsx
 import { useState } from "react";
 import Modal from "./UI/Modal";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems, selectCartTotal } from "../store/cartSelectors";
 import { clearCart } from "../store/cartSlice";
@@ -11,6 +11,9 @@ import Button from "./UI/Button";
 import { selectCheckoutVisible } from "../store/progressSelectors";
 import { currencyFormatter } from "../utils/formatting";
 
+type OrderResponse = {
+  id:string;
+}
 export default function Checkout() {
   const { user } = useAuth();
   const dispatch = useDispatch();
@@ -20,7 +23,7 @@ export default function Checkout() {
 
   const [invoiceUrl, setInvoiceUrl] = useState("");
 
-  const { sendRequest } = useHttp();
+  const { sendRequest } = useHttp<OrderResponse>();
 
   //Handler close modal or finishing handler
   const handleClose = () => {
@@ -28,7 +31,6 @@ export default function Checkout() {
   };
 
   const handleFinish = async () => {
-    console.log(user);
     if (!user) return;
 
     try {

@@ -10,6 +10,7 @@ export const orderRouter = Router();
 orderRouter.get("/orders", authMiddleware, adminMiddleware,async (req, res) => {
   const orders = await Order.findAll({
     include: [Product, User],
+    order: [["createdAt", "DESC"]],
   });
   res.json(orders);
 });

@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { AuthProvider } from "./store/authContext";
+import { AuthProvider } from "./hooks/authContext";
 import PrivateRoute from "./utils/privateRoute";
 import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegistrationForm";
@@ -34,15 +34,6 @@ function App() {
         </Provider>
       </AuthProvider>
     </BrowserRouter>
-    // <>
-    //   <Provider store={store}>
-    //     <Header />
-    //     <ProductCarousel/>
-    //     <Products />
-    //     <Cart />
-    //     <Checkout />
-    //   </Provider>
-    // </>
   );
 }
 

@@ -3,7 +3,7 @@ import useHttp from "../hooks/useHttp";
 import Error from "./UI/Error";
 import type { Products } from "../utils/interfaces";
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 
 export default function Products() {
   // Fetching Products state and Handler

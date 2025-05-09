@@ -43,9 +43,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } else {
           setUser(decoded);
         }
-      } catch (error) {
+      } catch (error:unknown) {
         localStorage.removeItem("token");
         setUser(null);
+        console.error(error)
       }
       setIsAuthChecked(true);
     };

@@ -5,12 +5,12 @@ import { Link, useNavigate } from "react-router";
 import { ChangeEvent, useState } from "react";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { sendRequest, error } = useHttp();
+  const { sendRequest, error } = useHttp<{ token: string }>();
   const { login, user } = useAuth();
   const navigate = useNavigate();
   const adminRole = user?.role;
@@ -19,8 +19,7 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      console.log(email, password);
-      const response: { token: string; } = await sendRequest({
+      const response = await sendRequest({
         url: `http://localhost:3000/login`,
         method: "POST",
         data: { email, password },
@@ -31,6 +30,7 @@ export default function LoginForm() {
 
       if (response?.token) {
         login(response?.token);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         adminRole ? navigate("/admin") : navigate("/");
       }
     } catch (error) {
@@ -47,6 +47,8 @@ export default function LoginForm() {
         <Input
           label="E-mail"
           type="text"
+          id="email"
+          textarea={false}
           value={email}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
@@ -55,6 +57,8 @@ export default function LoginForm() {
         <Input
           label="Password"
           type="password"
+          id="password"
+          textarea={false}
           value={password}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setPassword(e.target.value)

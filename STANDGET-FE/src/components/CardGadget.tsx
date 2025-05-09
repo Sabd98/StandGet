@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../store/cartSlice";
 import { Edit, ShoppingCart, TrashIcon } from "lucide-react";
 import { Link } from "react-router";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 import useHttp from "../hooks/useHttp";
 
 export default function CardGadget({

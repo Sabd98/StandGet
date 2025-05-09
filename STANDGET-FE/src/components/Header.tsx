@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../store/cartSelectors";
 import { showCart } from "../store/progressSlice";
 import { ShoppingCart } from "lucide-react";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 import { Link } from "react-router";
 
 export default function Header() {
@@ -34,10 +34,10 @@ export default function Header() {
         <Link to="/">Home</Link>
       </Button>
       <Button type="button" textOnly>
-        <Link to="admin/add">Add Product</Link>
+        <Link to="/admin/add">Add Product</Link>
       </Button>
       <Button type="button" textOnly>
-        <Link to="admin/history">Order History</Link>
+        <Link to="/admin/history">Order History</Link>
       </Button>
     </nav>
   );

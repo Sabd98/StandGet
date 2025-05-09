@@ -1,6 +1,6 @@
 // ProtectedRoute.tsx
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "../store/authContext";
+import { useAuth } from "../hooks/authContext";
 
 export default function PrivateRoute({
   allowedRoles,
@@ -16,6 +16,7 @@ export default function PrivateRoute({
 
   if (!user) return <Navigate to="/login" replace />;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   !allowedRoles.includes("admin") ? (
     <Navigate to="/" replace />
   ) : (
